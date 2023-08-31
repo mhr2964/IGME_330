@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Greeter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+      *{font-size:1.5em;}
+      #btn-hello{
+        height: 50px;
+        width: 150px;
+        font-size: 14px;
+      }
+
+      body{
+        font-family: 'Dancing Script';
+      }
+      @media only screen and (min-width: 1024px){
+        body{
+            background-color: red;
+            padding: 100px;
+        }
+      }
+    </style>
+  <script>
+    "use strict";
+    window.onload = function()
+    {
+    let output = document.querySelector("#output");
+    output.style.color = "red";
+    output.style.backgroundColor = "yellow";
+    // 1 - get a reference to the button
+    const button = document.querySelector("#btn-hello");
+    // 2 - add a click event to button that calls a `sayHello` function
+    //button.addEventListener("click", sayHello);
+    button.onclick = sayHello;
+    // 3 - create a `sayHello()` function
+    function sayHello() {
+        // 3A - get name of person from the <input>
+        // 3B - get a reference to the #output <p>
+        // 3C - update HTML of #output <p>
+        console.log("hello");
+        let input = document.querySelector("#input-firstname");
+        console.log(input.value);
+        //Text content turns everyone into a string so that people can't
+        //inject code into your site.
+        //output.textContent = "Hello " + input.value + "!";
+        //output.innerHTML = "Hello " + input.value + "!";
+        output.innerHTML = `Hello ${input.value.trim()}!`;
+    }
+    }
+
+    
+    </script>
+  </head>
+<body>
+  <button id = "btn-hello">Click Me!</button>
+  <input id="input-firstname" placeholder="Type in your name">
+  <p id="output">???</p>
+</body>
+</html>
