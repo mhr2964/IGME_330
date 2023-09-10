@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Greeter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-size: 1.5em;
+        }
+        
+        #btn-hello,
+        #btn-goodbye {
+            height: 50px;
+            width: 150px;
+            font-size: 14px;
+        }
+        
+        body {
+            font-family: 'Dancing Script';
+        }
+        
+        hr {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media only screen and (min-width: 1024px) {
+            body {
+                background-color: red;
+                padding: 100px;
+            }
+        }
+    </style>
+    <script>
+        "use strict";
+        window.onload = () => {
+            //Changing output box style
+            let output = document.querySelector("#output");
+            output.style.color = "red";
+            output.style.backgroundColor = "yellow";
+
+            //Hooking up greet to buttons' onclick
+            document.querySelector("#btn-hello").onclick = () => {
+                greet("Hello")
+            };
+
+            document.querySelector("#btn-goodbye").onclick = () => {
+                greet("Goodbye")
+            }
+
+            //Getting the checkbox
+            const box = document.querySelector("#shoutify");
+
+            //Changes the output text to a given greeting and the inputted name
+            //If the first or last name was not inputted then a default value
+            //is used. Also formats the text based on the checkbox at the end.
+            const greet = (greeting) => {
+                let inputFirst = document.querySelector("#input-firstname");
+                console.log(inputFirst.value);
+                let inputLast = document.querySelector("#input-lastname");
+                output.textContent = `${greeting} ${inputFirst.value.trim() || "Peter"} ${inputLast.value.trim() || "Parker"}!`;
+                //Using this method for general text formatting as well
+                //because it was bugging me
+                toggleShout()
+
+                //Example from class
+                //name = name.length != 0 ? name : "Peter";
+            }
+
+            //Either makes the output text all caps or normally capitalized based on
+            //if the checkbox is checked
+            const toggleShout = () => {
+                if (box.checked) {
+                    output.textContent = output.textContent.toLocaleUpperCase();
+                } else {
+                    output.textContent = output.textContent.toLocaleLowerCase();
+                    let tempStringArray = output.textContent.split("");
+                    tempStringArray[0] = tempStringArray[0].toLocaleUpperCase();
+                    for (let i = 0; i < tempStringArray.length; i++) {
+                        if (tempStringArray[i] === " ") {
+                            tempStringArray[i + 1] = tempStringArray[i + 1].toLocaleUpperCase();
+                        }
+                    }
+                    output.textContent = tempStringArray.join("");
+                }
+            }
+
+            //Hooking up toggleShout to the checkbox's onchange
+            box.onchange = toggleShout;
+        }
+    </script>
+</head>
+
+<body>
+    <button id="btn-hello">Say Hello</button>
+    <button id="btn-goodbye">Say Goodbye</button>
+    <input type="checkbox" id="shoutify" name="shoutify">
+    <label for="shoutify">Shoutify!</label>
+    <hr>
+    <input id="input-firstname" placeholder="Type in your name">
+    <input id="input-lastname" placeholder="Type in your name">
+    <p id="output">???</p>
+</body>
+
+</html>
