@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Json - Load Text</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h2>XHR - Load JSON File</h2>
+    <p>The <code>pet-names.json</code> file contains popular dog and cat pet names, separated by commas.</p>
+    <p>Note that because XHR is loading a local file, this and the other examples will have to be run off a web server rather than from your computer's hard drive (e.g. banjo.rit.edu or VSCode's liveserver etc)</p>
+
+    <hr>
+    <button id="my-button">Load Data</button>
+    <p id="output">Click button to load</p>
+
+
+    <script>
+        document.querySelector("#my-button").onclick = loadTextXHR;
+
+        function loadTextXHR() {
+            const url = "data/pet-names.json";
+            const xhr = new XMLHttpRequest();
+            xhr.onload = (e) => {
+                console.log(`In onload - HTTP Status Code = ${e.target.status}`);
+                const text = e.target.responseText;
+                let json;
+                try{
+                    json = JSON.parse(text);
+                } 
+                catch
+                {
+                    document.querySelector("#output").innerHTML = "JSON.parse(text) failed!";
+                }
+                const dogs = json.dognames;
+                const cats = json.catnames;
+                const dogsHtml = `<h2>Dog Names</h2><ol>${dogs.map((w => `<li>${w}</li>`)).join("")}</ol>`;
+                const catsHtml = `<h2>Cat Names</h2><ol>${cats.map((w => `<li>${w}</li>`)).join("")}</ol>`;
+                document.querySelector("#output").innerHTML = dogsHtml + catsHtml;
+            }
+            xhr.onerror = (e) => console.log(`In onerror - HTTP Status Code = ${e.target.status}`);
+            xhr.open("GET", url);
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>
