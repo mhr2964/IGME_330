@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Quiz 3B</title>
+    <script>
+        "use strict";
+        window.onload = () => {
+            const colors = "red,green,blue";
+            const colorArray = colors.split(",");
+            let html = `<ol>${colorArray.map(element => `<li>${element}</li>`).join("")}</ol>`;
+            document.querySelector("#output").innerHTML = html;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="output"></div>
+</body>
+
+</html>

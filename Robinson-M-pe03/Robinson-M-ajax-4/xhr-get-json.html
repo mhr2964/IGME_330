@@ -40,11 +40,25 @@
                 {
                     document.querySelector("#output").innerHTML = "JSON.parse(text) failed!";
                 }
-                const dogs = json.dognames;
-                const cats = json.catnames;
-                const dogsHtml = `<h2>Dog Names</h2><ol>${dogs.map((w => `<li>${w}</li>`)).join("")}</ol>`;
-                const catsHtml = `<h2>Cat Names</h2><ol>${cats.map((w => `<li>${w}</li>`)).join("")}</ol>`;
-                document.querySelector("#output").innerHTML = dogsHtml + catsHtml;
+
+                const keys = Object.keys(json);
+                let html = "";
+                for (let k of keys){
+                    const obj = json[k];
+                    html += `<h3>${obj.title = obj.title ? obj.title : "No Title Found"}</h3>`;
+                    html += `<ol>${obj["namelist"].map(w => `<li>${w}</li>`).join("")}</ol>`;
+                }
+                document.querySelector("#output").innerHTML = html;
+
+                /* //First Method
+                const dogs = json["c9532dc9"];
+                const cats = json["69bab900"];
+                const birds = json["2d8cf46a"];
+                const dogsHtml = `<h2>${dogs.title}</h2><ol>${dogs.namelist.map((w => `<li>${w}</li>`)).join("")}</ol>`;
+                const catsHtml = `<h2>${cats.title}</h2><ol>${cats.namelist.map((w => `<li>${w}</li>`)).join("")}</ol>`;
+                const birdsHtml = `<h2>${birds.title}</h2><ol>${birds.namelist.map((w => `<li>${w}</li>`)).join("")}</ol>`;
+                document.querySelector("#output").innerHTML = dogsHtml + catsHtml + birdsHtml;
+                */
             }
             xhr.onerror = (e) => console.log(`In onerror - HTTP Status Code = ${e.target.status}`);
             xhr.open("GET", url);
