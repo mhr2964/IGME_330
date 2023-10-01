@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sine Start</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        "use strict";
+        const canvasWidth = 400,
+            canvasHeight = 300;
+        let ctx;
+        window.onload = init;
+        let n = 0;
+        let divergence = 137.5;
+        const c = 4;
+        const fps = 60;
+        let radius = 3;
+
+        function init() {
+            ctx = canvas.getContext("2d");
+            document.querySelector("#reset").onclick = reset;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            loop();
+        }
+
+        function loop() {
+            setTimeout(loop, 1000 / fps);
+            // each frame draw a new dot
+            // `a` is the angle
+            // `r` is the radius from the center (e.g. "Pole") of the flower
+            // `c` is the "padding/spacing" between the dots
+            let a = n * dtr(divergence);
+            let r = c * Math.sqrt(n);
+            //console.log(a,r);
+            // now calculate the `x` and `y`
+            let x = r * Math.cos(a) + canvasWidth / 2;
+            let y = r * Math.sin(a) + canvasHeight / 2;
+            console.log(x, y);
+            //drawCircle(ctx,x,y,2,"white");
+            //let color = `rgb(${n % 256},0,255)`;
+            //let aDegrees = (n * divergence) % 256;
+            //let color = `rgb(${aDegrees},0,255)`;
+            //let aDegrees = (n * divergence) % 361;
+            //let color = `hsl(${aDegrees},100%,50%)`;
+            //let color = `hsl(${n/5 % 361},100%,50%)`;
+            let color = `rgb(${Math.sin(n) * 255}, ${Math.cos(n) * 255}, ${Math.tan(n) * 255}, 1)`;
+            //radius = (radius + 1) % 5;
+            radius = Math.sin(x * y * n) * 4 + 4;
+            drawCircle(ctx, x, y, radius, color);
+            divergence += Math.random(-.01, .01);
+            if (Math.abs(divergence - 137.5) > .3) {
+                divergence = 137.5;
+            }
+            ctx.save();
+            ctx.fillStyle = "rgb(255,255,255,.1)";
+            ctx.globalAlpha = .5 / fps;
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            ctx.restore();
+            n++;
+        }
+
+        function reset() {
+            n = 0;
+            divergence = 137.5;
+            radius = 3;
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+        }
+
+        // helpers
+        function dtr(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+
+        function drawCircle(ctx, x, y, radius, color) {
+            ctx.save();
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <button id="reset">Click Me!</button>
+    <p>I made the color based on the sin, cos, and tan of n. I also made the radius based on the sin of x * y * n. <br>I also slightly varied the divergence randomly, but brought it back to the original value if it strayed too far from it so the pattern
+        would persist through the chaos. <br>My control resets the drawing.</p>
+</body>
+
+</html>
