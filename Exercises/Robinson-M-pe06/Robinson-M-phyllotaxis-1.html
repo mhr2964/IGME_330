@@ -59,11 +59,6 @@
             if (Math.abs(divergence - 137.5) > .3) {
                 divergence = 137.5;
             }
-            ctx.save();
-            ctx.fillStyle = "rgb(255,255,255,.1)";
-            ctx.globalAlpha = .5 / fps;
-            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-            ctx.restore();
             n++;
         }
 
