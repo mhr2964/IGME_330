@@ -4,7 +4,7 @@ const cowsay = require("cowsay");
 const request = require('request');
 
 // #2 - set our URL
-let url = 'https://geek-jokes.sameerkumar.website/api';
+let url = 'https://people.rit.edu/~acjvks/330/shared/php/get-joke.php';
 
 // #3 - make the request
 // the second parameter below is a callback function (an ES6 arrow function in this case)
