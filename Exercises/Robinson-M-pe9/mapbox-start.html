@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Map Start</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+</head>
+
+<body>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoicm9iaW5tMjAiLCJhIjoiY2xvdmJhMnhwMDd5YjJqcW1tMzJ1OWxkZSJ9.97bjPH-z8qwIY5Fji1JvRQ';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/satellite-streets-v12' // style URL
+        });
+        map.setZoom(9);
+        map.setCenter([-77.6799, 43.083848]); // note the order - it's longitude,latitude - which is opposite of Google Maps
+        map.addControl(new mapboxgl.AttributionControl({
+            customAttribution: 'IGME_PE9 - Michael Robinson'
+        }));
+    </script>
+</body>
+
+</html>
