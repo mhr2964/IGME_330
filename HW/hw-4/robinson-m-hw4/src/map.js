@@ -1,6 +1,7 @@
 // I. Variables & constants
 const accessToken = "pk.eyJ1Ijoicm9iaW5tMjAiLCJhIjoiY2xvdmJhMnhwMDd5YjJqcW1tMzJ1OWxkZSJ9.97bjPH-z8qwIY5Fji1JvRQ";
 let map;
+let markers = [];
 
 // An example of how our GeoJSON is formatted
 // This will be replaced by the GeoJSON loaded from parks.geojson
@@ -38,11 +39,11 @@ const initMap = (center) => {
 	});
 	map.addControl(new mapboxgl.NavigationControl({showCompass:false}));
 
-	const clickHandler = () => {};//(id) => alert(`${id} was clicked!`);
-	addMarker(geojson.features[0], "poi", clickHandler);
+	//const clickHandler = () => {};//(id) => alert(`${id} was clicked!`);
+	//addMarker(geojson.features[0], "poi", clickHandler);
 };
 
-const addMarker = (feature ,className, clickHandler) => {
+const addMarker = (feature ,className, clickHandler, onClose) => {
 	const el = document.createElement('div');
 	el.className = className;
 	el.id = feature.id;
@@ -58,16 +59,19 @@ const addMarker = (feature ,className, clickHandler) => {
 		.setPopup(new mapboxgl.Popup({offset : 10})
 		.setHTML(html))
 		.addTo(map);
-	
+
+
+	marker._popup._closeButton.onclick = onClose;
 	el.addEventListener("click", () => clickHandler(marker._element.id));
+	markers.push(marker);
 }
 
 // III. "public" - will be exported
-const addMarkersToMap = (json, clickHandler) => {
+const addMarkersToMap = (json, clickHandler, onClose) => {
 	geojson = json;
 
 	for(const feature of geojson.features){
-		addMarker(feature, "poi", clickHandler);
+		addMarker(feature, "poi", clickHandler, onClose);
 	}
 }
 
@@ -88,4 +92,8 @@ const setPitchAndBearing = (pitch=0,bearing=0) => {
 	map.setBearing(bearing);
 };
 
-export { initMap, flyTo, setZoomLevel, setPitchAndBearing, addMarkersToMap };
+const getMarkers = () => {
+	return markers;
+}
+
+export { initMap, flyTo, setZoomLevel, setPitchAndBearing, addMarkersToMap, getMarkers };
