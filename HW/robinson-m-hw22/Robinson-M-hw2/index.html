@@ -1,52 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="has-background-info">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>Title</title>
-    <link href="./styles/default-styles.css" type="text/css" rel="stylesheet" />
+    <link href="./styles/default-styles.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <script src="https://kit.fontawesome.com/5be182e49d.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <main>
-        <canvas width="800" height="400"></canvas>
-        <div id="controls">
-            <section>
-                <button id="btn-play" data-playing="no"></button>
-                <button id="btn-fs">Full Screen</button>
-
-                <label>Track: 
-        <select id="select-track">
-            <!--
-          <option value="media/New Adventure Theme.mp3" selected>New Adventure Theme</option>
-          <option value="media/Peanuts Theme.mp3">Peanuts Theme</option>
-          <option value="media/The Picard Song.mp3">The Picard Song</option>-->
-        </select>
-      </label>
-            </section>
-
-            <section>
-                Volume: <input type="range" id="slider-volume" min="0" max="2" value="1" step="0.01">
-                <span id="label-volume">???</span>
-            </section>
-            <section>
-                <span><input type="checkbox" id="cb-gradient"><label for="cb-gradient">Show Gradient</label></span>
-                <span><input type="checkbox" id="cb-bar"><label for="cb-bar">Show Bars</label></span>
-                <span><input type="checkbox" id="cb-circles"><label for="cb-circles">Show Circles</label></span>
-                <!-- we'll use this 4th checkbox soon! -->
-                <span><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
-                <span><input type="checkbox" id="cb-invert"><label for="cb-invert">Show Invert</label></span>
-                <span><input type="checkbox" id="cb-emboss"><label for="cb-emboss">Show Emboss</label></span>
-                <span><input type="checkbox" id="cb-highshelf"><label for="cb-highshelf">Highshelf Filter (Treble)</label></span>
-                <span><input type="checkbox" id="cb-lowshelf"><label for="cb-lowshelf">Lowshelf Filter (Bass)</label></span>
-                <span><label for="datatype">| Datatype: </label><select name="datatype" id="datatype">
-                    <option value="option-frequency">Frequency Data</option>
-                    <option value="option-time-domain">Time Domain Data</option>
-                  </select></span>
-            </section>
+    <nav class="navbar has-shadow is-white">
+        <!-- logo / brand-->
+        <div class="navbar-brand">
+            <a class="navbar-item" href="about.html">
+                <i class="fa-solid fa-music"></i>
+            </a>
+            <a class="navbar-burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
         </div>
-    </main>
+        <div class="navbar-menu" id="nav-links">
+            <div class="navbar-start">
+                <a class="navbar-item" href="about.html">
+                    About
+                </a>
+
+                <a class="navbar-item is-hoverable has-text-weight-bold" href="index.html">
+                    App
+                </a>
+            </div>
+            <!-- end navbar-start -->
+        </div>
+    </nav>
+
+    <div id="" class="mx-auto mt-6 pb-6 container">
+        <div class="box">
+            <canvas width="800" height="400" class=""></canvas>
+        </div>
+        <div id="controls" class="box">
+            <div class="columns mr-6 mt-4">
+                <button id="btn-play" data-playing="no" class="button column is-1 is-primary mr-2 mt-2"></button>
+                <button id="btn-fs" class="button column is-2 is-danger has-text-white mt-2">Full Screen</button>
+                <label class="label column mt-2 pt-0 is-3 mr-0 pr-0">Track: <span class="select mr-0 pr-0"><select id="select-track"></select></span></label>
+                <label class="label column ml-2 pl-0 is-3">Volume: <input type="range" id="slider-volume" min="0" max="2" value="1" step="0.01"><span id="label-volume" class="pl-2">???</span></label>
+            </div>
+        </div>
+
+        <div class="box">
+            <span class="checkbox"><input type="checkbox" id="cb-gradient"><label for="cb-gradient">Show Gradient</label></span>
+            <span class="checkbox"><input type="checkbox" id="cb-bar"><label for="cb-bar">Show Bars</label></span>
+            <span class="checkbox"><input type="checkbox" id="cb-circles"><label for="cb-circles">Show Circles</label></span>
+            <!-- we'll use this 4th checkbox soon! -->
+            <span class="checkbox"><input type="checkbox" id="cb-noise"><label for="cb-noise">Show Noise</label></span>
+            <span class="checkbox"><input type="checkbox" id="cb-invert"><label for="cb-invert">Show Invert</label></span>
+            <span class="checkbox"><input type="checkbox" id="cb-emboss"><label for="cb-emboss">Show Emboss</label></span>
+            <span class="checkbox"><input type="checkbox" id="cb-highshelf"><label for="cb-highshelf">Highshelf Filter (Treble)</label></span>
+            <span class="checkbox"><input type="checkbox" id="cb-lowshelf"><label for="cb-lowshelf">Lowshelf Filter (Bass)</label></span>
+            <span><label for="data-type">| Datatype: </label><select name="data-type" id="data-type">
+                <option value="option-frequency">Frequency Data</option>
+                <option value="option-time-domain">Time Domain Data</option>
+              </select></span>
+        </div>
+    </div>
     <script src="./dist/bundle.js" type="module"></script>
+    <!--<script src="src/hamburger.js"></script>-->
 </body>
 
 </html>

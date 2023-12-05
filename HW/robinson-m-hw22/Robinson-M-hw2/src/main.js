@@ -26,7 +26,7 @@ let filenames;
 //sound1: "media/New Adventure Theme.mp3"
 //});
 
-let init = () => {
+const init = () => {
     console.log("init called");
     console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
     audio.setupWebaudio(filenames[0]);
@@ -36,7 +36,7 @@ let init = () => {
     loop();
 }
 
-let setupUI = (canvasElement) => {
+const setupUI = (canvasElement) => {
     // A - hookup fullscreen button
     const fsButton = document.querySelector("#btn-fs");
     const playButton = document.querySelector("#btn-play");
@@ -123,7 +123,7 @@ let setupUI = (canvasElement) => {
     }
 
     // I. set the initial state of the high shelf checkbox
-    document.querySelector('#cb-highshelf').checked = audio.highshelf; // `highshelf` is a boolean we will declare in a second
+    document.querySelector('#cb-highshelf').checked = audio.getHighShelf(); // `highshelf` is a boolean we will declare in a second
 
     // II. change the value of `highshelf` every time the high shelf checkbox changes state
     document.querySelector('#cb-highshelf').onchange = e => {
@@ -134,7 +134,7 @@ let setupUI = (canvasElement) => {
     // III. 
     audio.toggleHighshelf(); // when the app starts up, turn on or turn off the filter, depending on the value of `highshelf`!
 
-    document.querySelector('#cb-lowshelf').checked = audio.lowshelf;
+    document.querySelector('#cb-lowshelf').checked = audio.getLowShelf();
 
 
     document.querySelector('#cb-lowshelf').onchange = e => {
@@ -145,19 +145,19 @@ let setupUI = (canvasElement) => {
 
     audio.toggleLowshelf();
 
-    document.querySelector("#datatype").onchange = e => {
+    document.querySelector("#data-type").onchange = e => {
         canvas.setAudioDataType(e.target.value);
 
     }
 }
 
-let loop = () => {
+const loop = () => {
     /* NOTE: This is temporary testing code that we will delete in Part II */
     setTimeout(loop, 1000 / 60);
     canvas.draw(drawParams);
 }
 
-function loadXHR() {
+const loadXHR = () => {
     const url = "data/av-data.json";
     const xhr = new XMLHttpRequest();
     xhr.onload = (e) => {

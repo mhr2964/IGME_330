@@ -24,7 +24,7 @@ let audioData = new Uint8Array(DEFAULTS.numSamples / 2);
 
 // **Next are "public" methods - we are going to export all of these at the bottom of this file**
 
-let setupWebaudio = (filePath) => {
+const setupWebaudio = (filePath) => {
     // 1 - The || is because WebAudio has not been standardized across browsers yet
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     audioCtx = new AudioContext();
@@ -76,24 +76,24 @@ let setupWebaudio = (filePath) => {
     gainNode.connect(audioCtx.destination);
 }
 
-let loadSoundFile = (filePath) => {
+const loadSoundFile = (filePath) => {
     element.src = filePath;
 }
 
-let playCurrentSound = () => {
+const playCurrentSound = () => {
     element.play();
 }
 
-let pauseCurrentSound = () => {
+const pauseCurrentSound = () => {
     element.pause();
 }
 
-let setVolume = (value) => {
+const setVolume = (value) => {
     value = Number(value); // make sure that it's a Number rather than a String
     gainNode.gain.value = value;
 }
 
-let toggleHighshelf = () => {
+const toggleHighshelf = () => {
     if (highshelf) {
         highShelfBiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime); // we created the `biquadFilter` (i.e. "treble") node last time
         highShelfBiquadFilter.gain.setValueAtTime(25, audioCtx.currentTime);
@@ -102,7 +102,7 @@ let toggleHighshelf = () => {
     }
 }
 
-let toggleLowshelf = () => {
+const toggleLowshelf = () => {
     if (lowshelf) {
         lowShelfBiquadFilter.frequency.setValueAtTime(1000, audioCtx.currentTime);
         lowShelfBiquadFilter.gain.setValueAtTime(15, audioCtx.currentTime);
@@ -111,12 +111,19 @@ let toggleLowshelf = () => {
     }
 }
 
-let setHighShelf = (hs) => {
+const setHighShelf = (hs) => {
     highshelf = hs;
 }
 
-let setLowShelf = (ls) => {
+const setLowShelf = (ls) => {
     lowshelf = ls;
 }
 
-export { audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode, toggleHighshelf, toggleLowshelf, setHighShelf, setLowShelf };
+const getHighShelf = () => {
+    return highshelf;
+}
+
+const getLowShelf = () => {
+    return lowshelf;
+}
+export { audioCtx, setupWebaudio, playCurrentSound, pauseCurrentSound, loadSoundFile, setVolume, analyserNode, toggleHighshelf, toggleLowshelf, setHighShelf, setLowShelf, getHighShelf, getLowShelf };

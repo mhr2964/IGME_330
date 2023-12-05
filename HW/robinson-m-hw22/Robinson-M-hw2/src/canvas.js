@@ -8,6 +8,7 @@
 */
 
 import * as utils from './utils.js';
+import CircleSprite from './CircleSprite.js';
 
 let ctx, canvasWidth, canvasHeight, gradient, analyserNode, audioData, audioDataType;
 
@@ -15,7 +16,7 @@ let spriteOne;
 let spriteTwo;
 
 
-let setupCanvas = (canvasElement, analyserNodeRef) => {
+const setupCanvas = (canvasElement, analyserNodeRef) => {
     // create drawing context
     ctx = canvasElement.getContext("2d");
     canvasWidth = canvasElement.width;
@@ -36,7 +37,7 @@ let setupCanvas = (canvasElement, analyserNodeRef) => {
 
 }
 
-let draw = (params = {}) => {
+const draw = (params = {}) => {
     // 1 - populate the audioData array with the frequency data from the analyserNode
     // notice these arrays are passed "by reference" 
     switch (audioDataType) {
@@ -229,60 +230,8 @@ let draw = (params = {}) => {
     ctx.putImageData(imageData, 0, 0);
 }
 
-let setAudioDataType = (type) => {
+const setAudioDataType = (type) => {
     audioDataType = type;
 }
 
-class CircleSprite {
-    constructor(ctx, radius, x, y, fillColor, strokeColor, lineWidth) {
-        this.ctx = ctx;
-        this.radius = radius;
-        this.x = x;
-        this.y = y;
-        this.startx = x;
-        this.starty = y;
-        this.fillColor = fillColor;
-        this.strokeColor = strokeColor;
-        this.lineWidth = lineWidth;
-        this.data = [0];
-        this.targetIndex = 0;
-        Object.seal(this);
-    }
-
-    updateTargetIndex(index) {
-        this.targetIndex = index;
-    }
-
-    updateAudioData(data) {
-        this.data = data;
-    }
-
-    draw() {
-        ctx.save();
-        ctx.fillStyle = this.fillColor;
-        ctx.strokeStyle = this.strokeColor;
-        ctx.lineWidth = this.lineWidth;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-    }
-
-    update(datatype) {
-        switch (datatype) {
-            case "option-frequency":
-                this.x = Math.cos(this.data[this.targetIndex]) * 100 + 400;
-                this.y = this.starty;
-                break;
-
-            case "option-time-domain":
-                this.y = Math.sin(this.data[this.targetIndex]) * 100 + 400;
-                this.x = this.startx;
-                break;
-        }
-    }
-
-}
 export { setupCanvas, draw, setAudioDataType };

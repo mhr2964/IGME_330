@@ -1,3 +1,4 @@
+/*
 body {
     background: #eeeeee;
     font-family: tahoma, verdana, sans serif;
@@ -15,6 +16,10 @@ canvas {
     margin-left: 1rem;
 }
 
+#controls-1 {
+    margin-left: 1rem;
+}
+
 #volumeLabel {
     margin-left: 1rem;
 }
@@ -27,6 +32,7 @@ section {
     font-size: 1.2rem;
     width: 6rem;
 }
+*/
 
 button[data-playing="yes"]:after {
     content: "Pause";
@@ -36,7 +42,9 @@ button[data-playing="no"]:after {
     content: "Play";
 }
 
+
+/*
 #fsButton {
     font-size: 1.2rem;
     width: 8rem;
-}
+}*/
