@@ -1,12 +1,14 @@
 import * as map from "./map.js";
 import * as ajax from "./ajax.js";
+import * as storage from "./storage.js";
+import * as firebase from "./firebase.js";
 
 // I. Variables & constants
 // NB - it's easy to get [longitude,latitude] coordinates with this tool: http://geojson.io/
 const lnglatNYS = [-75.71615970715911, 43.025810763917775];
 const lnglatUSA = [-98.5696, 39.8282];
 let geojson;
-let favoriteIds = ["p20","p79","p180","p43"];
+let favoriteIds = [];
 let favoriteButton;
 let deleteButton;
 let feature = null;
@@ -14,12 +16,18 @@ let feature = null;
 
 // II. Functions
 const setupUI = () => {
+	const updateFavorites = () => {
+		storage.writeToLocalStorage("mhr2964-favorite-parks", favoriteIds);
+			refreshFavorites();
+			updateButtons(feature.id);
+	}
+
 	favoriteButton.onclick = () => {
 		if (feature != null)
 		{
 			favoriteIds.push(feature.id);
-			refreshFavorites();
-			updateButtons(feature.id);
+			updateFavorites();
+			firebase.writeFavoriteParkData(feature.id, feature.properties.title, 1);
 		}
 	}
 
@@ -27,8 +35,8 @@ const setupUI = () => {
 		if (feature != null && favoriteIds.includes(feature.id))
 		{
 			favoriteIds.splice(favoriteIds.indexOf(feature.id), 1);
-			refreshFavorites();
-			updateButtons(feature.id);
+			updateFavorites();
+			firebase.writeFavoriteParkData(feature.id, feature.properties.title, -1);
 		}
 	}
 
@@ -57,17 +65,23 @@ const setupUI = () => {
 const init = () => {
 	favoriteButton = document.querySelector("#favorite-btn");
 	deleteButton = document.querySelector("#delete-btn");
+	
 	map.initMap(lnglatNYS);
 	ajax.downloadFile("data/parks.geojson", (str) => {
 		geojson = JSON.parse(str);
-		//console.log(geojson);
 		map.addMarkersToMap(geojson, showFeatureDetails, resetMap);
 		setupUI();
 	})
+
+	favoriteIds = storage.readFromLocalStorage("mhr2964-favorite-parks");
+	if (!Array.isArray(favoriteIds))
+	{
+		storage.writeToLocalStorage("mhr2964-favorite-parks", []);
+		favoriteIds = [];
+	}
 };
 
 const showFeatureDetails = (id) => {
-	//console.log(`showFeatureDetails - id=${id}`);
 	feature = getFeatureById(id);
 	document.querySelector("#details-1").innerHTML = `Info for ${feature.properties.title}`;
 	document.querySelector("#details-2").innerHTML = `<strong>Address:</strong> ${feature.properties.address}<br>
